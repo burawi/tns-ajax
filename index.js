@@ -1,7 +1,7 @@
 var fs = require("file-system");
 var fetchModule = require("fetch");
 
-module.exports = function (test) {
+module.exports = function (test,onFail) {
 
     if(test === undefined) test = false;
 
@@ -9,6 +9,9 @@ module.exports = function (test) {
         if (!response.ok) {
             if(test) console.log(JSON.stringify(response, null, 2));
             throw Error(response.statusText);
+            if(onFail !== undefined){
+                onFail();
+            }
         }
         return response;
     }
