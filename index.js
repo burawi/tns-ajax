@@ -1,7 +1,7 @@
 var fs = require("file-system");
 var fetchModule = require("fetch");
 
-module.exports = function (test,onFail) {
+module.exports = function (test) {
 
     if(test === undefined) test = false;
 
@@ -9,16 +9,13 @@ module.exports = function (test,onFail) {
         if (!response.ok) {
             if(test) console.log(JSON.stringify(response, null, 2));
             throw Error(response.statusText);
-            if(onFail !== undefined){
-                onFail();
-            }
         }
         return response;
     }
 
     var exports = {};
 
-    exports.post = function (uri,json,callback) {
+    exports.post = function (uri, json, success, fail) {
         if(test){
             console.log('ABOUT TO SEND REQUEST TO URI:'+ uri + ' || METHOD: POST');
         }
@@ -29,14 +26,17 @@ module.exports = function (test,onFail) {
                 "Content-Type": "application/json"
             }
         })
-        .then(handleErrors)
+        .then(function (response) {
+            handleErrors(response);
+            if(fail !== undefined) fail();
+        })
         .then(function(response) {
             if(test){
                 console.log('GOT A RESPONSE FROM URI:'+ uri + ' || METHOD: POST');
                 console.log(response._bodyText);
             }
             response = JSON.parse(response._bodyText);
-            callback(response);
+            success(response);
         });
     }
 
