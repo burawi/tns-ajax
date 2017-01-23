@@ -1,13 +1,13 @@
 {
   "name": "tns-ajax",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "a simple ajax post method for nativescript",
   "main": "index.js",
   "nativescript": {
-      "platforms": {
-          "ios": "1.0.0",
-          "android": "1.1.0"
-      }
+    "platforms": {
+      "ios": "1.0.0",
+      "android": "1.1.0"
+    }
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
