@@ -8,7 +8,6 @@ module.exports = function (test) {
     var handleErrors = function (response) {
         if (!response.ok) {
             if(test) console.log(JSON.stringify(response, null, 2));
-            throw Error(response.statusText);
         }
         return response;
     }
