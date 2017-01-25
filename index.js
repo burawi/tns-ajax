@@ -5,11 +5,11 @@ module.exports = function (test) {
 
     if(test === undefined) test = false;
 
-    var handleErrors = function (response) {
+    var handleErrors = function (response, fail) {
         if (!response.ok) {
             if(test) console.log(JSON.stringify(response, null, 2));
+            if(fail !== undefined) fail();
         }
-        return response;
     }
 
     var exports = {};
@@ -26,8 +26,8 @@ module.exports = function (test) {
             }
         })
         .then(function (response) {
-            handleErrors(response);
-            if(fail !== undefined) fail();
+            handleErrors(response, fail);
+            return response;
         })
         .then(function(response) {
             if(test){
